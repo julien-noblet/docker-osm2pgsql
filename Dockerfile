@@ -35,13 +35,15 @@ ENV OSM2PGSQL_VERSION 0.87.2
 
 RUN mkdir src &&\
     cd src &&\
-    git clone --depth 1 --branch $OSM2PGSQL_VERSION https://github.com/openstreetmap/osm2pgsql.git &&\
-    cd osm2pgsql &&\
+    git clone --depth 1 --branch $OSM2PGSQL_VERSION https://github.com/openstreetmap/osm2pgsql.git
+    
+RUN    cd osm2pgsql &&\
     ./autogen.sh &&\
-    ./configure &&\
-    make &&\
-    make install &&\
-    cd /root &&\
+    ./configure
+    
+RUN    make
+RUN    make install
+RUN    cd /root &&\
     rm -rf src
 
 ENTRYPOINT ["/bin/bash"]
