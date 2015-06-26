@@ -1,7 +1,7 @@
 # DOCKER-VERSION 1.5.0
 # VERSION 0.2
 
-FROM debian:wheezy
+FROM mdillon/postgis:9.4
 MAINTAINER James Badger <james@jamesbadger.ca>
 
 ENV DEBIAN_FRONTEND noninteractive
