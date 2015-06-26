@@ -7,6 +7,7 @@ MAINTAINER James Badger <james@jamesbadger.ca>
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update && apt-get install -y \
+    git \
     autoconf \
     automake \
     g++ \
