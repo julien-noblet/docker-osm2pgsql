@@ -19,9 +19,10 @@ RUN apt-get install -y libbz2-dev
 RUN apt-get install -y libgeos++-dev libgeos-dev
 RUN apt-get install -y libpq-dev
 RUN apt-get install -y libproj-dev
-RUN apt-get install -y libprotobuf-c0-dev
+RUN apt-get install -y libprotobuf-c0-dev protobuf-c-compiler
 RUN apt-get install -y libxml2-dev
-RUN apt-get install -y protobuf-c-compiler
+RUN apt-get install -y unzip
+
 RUN rm -rf /var/lib/apt/lists/*
 
 ENV HOME /root
@@ -29,14 +30,21 @@ ENV OSM2PGSQL_VERSION 0.88.0
 
 RUN mkdir src
 
-ADD https://github.com/openstreetmap/osm2pgsql/archive/$OSM2PGSQL_VERSION.tar.gz  src/    
+ADD https://github.com/openstreetmap/osm2pgsql/archive/$OSM2PGSQL_VERSION.tar.gz  src/
 
-RUN    cd osm2pgsql &&\
+RUN cd src && tar -zxvf $OSM2PGSQL_VERSION.tar.gz
+
+
+RUN cd src/osm2pgsql-$OSM2PGSQL_VERSION &&\
     ./autogen.sh &&\
     ./configure
 
-RUN    make
-RUN    make install
+RUN cd src/osm2pgsql-$OSM2PGSQL_VERSION && make
+RUN cd src/osm2pgsql-$OSM2PGSQL_VERSION && make install
+
+ADD https://github.com/julien-noblet/download-geofabrik/releases/download/v0.0.1/download-geofabrik-linux32.zip src/
+RUN cd src && unzip download-geofabrik-linux32.zip && mv download-geofabrik /usr/bin/
+
 RUN    cd /root &&\
     rm -rf src
 
