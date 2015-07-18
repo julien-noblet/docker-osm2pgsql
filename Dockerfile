@@ -47,6 +47,7 @@ RUN apt-get update &&\
 RUN mkdir src
 
 ADD https://github.com/openstreetmap/osm2pgsql/archive/$OSM2PGSQL_VERSION.tar.gz src/
+ADD https://github.com/julien-noblet/download-geofabrik/releases/download/v0.0.1/download-geofabrik-linux32.zip src/
 
 RUN cd src &&\
     tar -zxvf $OSM2PGSQL_VERSION.tar.gz &&\
@@ -54,14 +55,11 @@ RUN cd src &&\
     ./autogen.sh &&\
     ./configure &&\
     make &&\
-    make install
-
-ADD https://github.com/julien-noblet/download-geofabrik/releases/download/v0.0.1/download-geofabrik-linux32.zip src/
-RUN cd src &&\
+    make install &&\
+    cd src &&\
     unzip download-geofabrik-linux32.zip &&\
-    mv download-geofabrik /usr/bin/
-
-RUN cd /root &&\
+    mv download-geofabrik /usr/bin/ \
+    && cd /root &&\
     rm -rf src
 
 ENTRYPOINT ["/bin/bash"]
