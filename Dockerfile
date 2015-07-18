@@ -59,7 +59,6 @@ RUN cd /root/src/ &&\
     cd /root/src/ &&\
     unzip download-geofabrik-linux32.zip &&\
     mv download-geofabrik /usr/bin/ \
-    && cd /root &&\
-    rm -rf src
+    && rm -rf /root/src
 
 ENTRYPOINT ["/bin/bash"]
