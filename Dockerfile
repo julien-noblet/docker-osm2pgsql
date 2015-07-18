@@ -28,6 +28,8 @@ RUN apt-get install -y  git\
                         libprotobuf-c0-dev\
                         protobuf-c-compiler\
                         libxml2-dev\
+                        ca-certificates\
+                        libpsl0\
                         unzip
 
 RUN rm -rf /var/lib/apt/lists/*
