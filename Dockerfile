@@ -1,13 +1,24 @@
 # DOCKER-VERSION 1.5.0
 # VERSION 0.2
 
-FROM mdillon/postgis:9.4
-MAINTAINER James Badger <james@jamesbadger.ca>
+FROM postgres:9.4
+MAINTAINER julien-noblet
+
+
 
 ENV DEBIAN_FRONTEND noninteractive
+ENV HOME /root
+ENV PGSQL_VERSION 9.4
+ENV POSTGIS_MAJOR 2.1
+ENV POSTGIS_VERSION 2.1.7+dfsg-3~94.git954a8d0.pgdg80+1
+ENV OSM2PGSQL_VERSION 0.88.0
 
-RUN apt-get update
-RUN apt-get install -y  git\
+
+RUN apt-get update &&\
+    apt-get install -y --no-install-recommends \
+                        postgresql-$PG_MAJOR-postgis-$POSTGIS_MAJOR=$POSTGIS_VERSION \
+                        postgis=$POSTGIS_VERSION &&\
+    apt-get install -y  git\
                         git-core\
                         autoconf\
                         automake\
@@ -30,12 +41,8 @@ RUN apt-get install -y  git\
                         libxml2-dev\
                         ca-certificates\
                         libpsl0\
-                        unzip
-
-RUN rm -rf /var/lib/apt/lists/*
-
-ENV HOME /root
-ENV OSM2PGSQL_VERSION 0.88.0
+                        unzip\
+    && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir src
 
