@@ -44,10 +44,10 @@ RUN apt-get update &&\
                         unzip\
     && rm -rf /var/lib/apt/lists/*
 
-RUN mkdir src
+RUN mkdir /root/src
 
-ADD https://github.com/openstreetmap/osm2pgsql/archive/$OSM2PGSQL_VERSION.tar.gz src/
-ADD https://github.com/julien-noblet/download-geofabrik/releases/download/v0.0.1/download-geofabrik-linux32.zip src/
+ADD https://github.com/openstreetmap/osm2pgsql/archive/$OSM2PGSQL_VERSION.tar.gz /root/src/
+ADD https://github.com/julien-noblet/download-geofabrik/releases/download/v0.0.1/download-geofabrik-linux32.zip /root/src/
 
 RUN cd /root/src/ &&\
     tar -zxvf $OSM2PGSQL_VERSION.tar.gz &&\
